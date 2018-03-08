@@ -1,71 +1,82 @@
 # require 'pry'
 
+# CLI controller - get user input
+# CLI
+#  Scraper
+#   Species
+
 class EndangeredSpecies::CLI
 
   def call
     puts ""
-    puts "Welcome! Help save our planet by learning more about the world's most endangered species and their habitats."
+    puts "Welcome! Learn more about the world's most endangered species:"
+    puts ""
+
+    #priming
+    EndangeredSpecies::Scraper.new.scrape_species_index
+    list
     start
   end
 
-
-  def list_species
-    @species = EndangeredSpecies::Species.scrape_species
-    @species.each.with_index(1) do |species, i|
-      puts "#{i}. #{species.name} - #{species.status}"
+  def list
+    EndangeredSpecies::Species.all.each_with_index do |species, i|
+      puts "#{i+1}. #{species.name}"
     end
   end
 
   def start
-    input = nil
+    input = ""
     while input != "exit"
       puts ""
-      puts "What species would you like more information on?"
+      puts "Enter a number for which species you would like to learn more about:"
       puts ""
-      list_species
+      input = gets.strip
 
-      input = gets.strip.downcase
+      #how to deal with user input - create a method for it
+      if input.to_i-1  <= EndangeredSpecies::Species.all.size
+        species = EndangeredSpecies::Species.all[input.to_i-1]
 
-      if input.to_i > 0
-        species_info = @species[input.to_i-1]
         puts ""
-        puts "Species: #{species_info.name}"
+        puts "#{species.name}"
         puts ""
-        puts "Conservation status: #{species_info.status}"
+        puts "Summary: #{species.summary}"
         puts ""
-        puts "Location: #{species_info.location}"
+        puts "Website: #{species.url}"
         puts ""
-        puts "Habitat: #{species_info.habitat}"
-        puts ""
-        puts "Description:"
-        puts ""
-        puts "#{species_info.summary}"
-        puts ""
-        puts "For more information, visit:  #{species_info.url}"
-      else
-        goodbye
+
+        puts "Would you like to read more? Enter Y or N."
+        input = gets.strip.downcase
+        if ["y", "yes"].include?(input.downcase)
+          # functionality - get content for species
+          # build method in Species class
+          puts species.url
+        elsif ["n", "no"].include?(input.downcase)
+          goodbye
+        else
+          puts ""
+          puts "Not sure what you're looking for, please try again!"
+          puts ""
+          goodbye
+        end
       end
     end
   end
 
   def goodbye
-    puts ""
-    puts "Would like you to continue? Enter Y or N"
-    puts ""
-    input = gets.strip.downcase
-    # input = nil
-    if input == "y"
-      start
-    elsif
-      input == "n"
+    input = ""
+    while input != "exit"
       puts ""
-      puts "Thanks for visiting! Now go out there and make a difference for nature!"
-      exit
-    else
+      puts "Do you want to continue? Enter Y or N."
       puts ""
-      puts "Not sure what you're looking for, please try again!"
-      goodbye
+      input = gets.strip.downcase
+      if ["y", "yes"].include?(input.downcase)
+        start
+      else ["n", "no", "exit"].include?(input.downcase)
+        puts ""
+        puts "Thanks for visiting!"
+        puts ""
+        exit
+      end
     end
   end
-
 end
