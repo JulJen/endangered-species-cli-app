@@ -13,7 +13,7 @@ class EndangeredSpecies::CLI
     puts ""
 
     #priming
-    EndangeredSpecies::Scraper.new.scrape_species_index
+    EndangeredSpecies::Scraper.new.make_species
     list
     start
   end
@@ -21,6 +21,12 @@ class EndangeredSpecies::CLI
   def list
     EndangeredSpecies::Species.all.each_with_index do |species, i|
       puts "#{i+1}. #{species.name}"
+    end
+  end
+
+  def summary
+    EndangeredSpecies::Species.all.each do |species|
+      puts "#{species.summary}"
     end
   end
 
@@ -37,21 +43,33 @@ class EndangeredSpecies::CLI
         species = EndangeredSpecies::Species.all[input.to_i-1]
 
         puts ""
-        puts "#{species.name}"
+        puts "Species name: #{species.name} - Scientific name: #{species.scientific}"
         puts ""
-        puts "Summary: #{species.summary}"
+        puts "Status: #{species.status}"
         puts ""
         puts "Website: #{species.url}"
         puts ""
 
-        puts "Would you like to read more? Enter Y or N."
+        puts "Would you like to read more about #{species.name}? Enter Y or N."
         input = gets.strip.downcase
         if ["y", "yes"].include?(input.downcase)
           # functionality - get content for species
           # build method in Species class
-          puts species.url
-        elsif ["n", "no"].include?(input.downcase)
+          puts ""
+          puts "Population: #{species.pop}"
+          puts "Height: #{species.height}"
+          puts "Weight: #{species.weight}"
+          puts "Length: #{species.length}"
+          puts "Habitats: #{species.habitat}"
+          puts "Summary: #{species.summary}"
+          puts ""
+          sleep 3
           goodbye
+        elsif ["n", "no"].include?(input.downcase)
+          puts ""
+          puts "Thanks for visiting!"
+          puts ""
+          exit
         else
           puts ""
           puts "Not sure what you're looking for, please try again!"
@@ -70,12 +88,18 @@ class EndangeredSpecies::CLI
       puts ""
       input = gets.strip.downcase
       if ["y", "yes"].include?(input.downcase)
+        list
         start
-      else ["n", "no", "exit"].include?(input.downcase)
+      elsif ["n", "no", "exit"].include?(input.downcase)
         puts ""
         puts "Thanks for visiting!"
         puts ""
         exit
+      else
+        puts ""
+        puts "Not sure what you're looking for, please try again!"
+        puts ""
+        goodbye
       end
     end
   end
