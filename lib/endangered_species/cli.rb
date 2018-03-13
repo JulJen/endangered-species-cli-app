@@ -24,12 +24,6 @@ class EndangeredSpecies::CLI
     end
   end
 
-  def summary
-    EndangeredSpecies::Species.all.each do |species|
-      puts "#{species.summary}"
-    end
-  end
-
   def start
     input = ""
     while input != "exit"
@@ -42,27 +36,26 @@ class EndangeredSpecies::CLI
       if input.to_i-1  <= EndangeredSpecies::Species.all.size
         species = EndangeredSpecies::Species.all[input.to_i-1]
 
+        puts "----------- #{species.name} ----------- "
         puts ""
-        puts "Species name: #{species.name} - Scientific name: #{species.scientific}"
+        puts "Scientific name: #{species.scientific}"
         puts ""
         puts "Status: #{species.status}"
         puts ""
         puts "Website: #{species.url}"
         puts ""
-
-        puts "Would you like to read more about #{species.name}? Enter Y or N."
+        puts "Would you like to read more? Enter Y or N."
         input = gets.strip.downcase
         if ["y", "yes"].include?(input.downcase)
           # functionality - get content for species
           # build method in Species class
           puts ""
-          puts "Population: #{species.pop}"
-          puts "Height: #{species.height}"
-          puts "Weight: #{species.weight}"
-          puts "Length: #{species.length}"
-          puts "Habitats: #{species.habitat}"
-          puts "Summary: #{species.summary}"
+          puts "----------- #{species.name} ----------- "
           puts ""
+          puts "#{species.summary}"
+          puts ""
+          puts "Places: #{species.place}"
+          puts "Habitats: #{species.habitat}"
           sleep 3
           goodbye
         elsif ["n", "no"].include?(input.downcase)

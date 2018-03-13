@@ -15,9 +15,6 @@ class EndangeredSpecies::Scraper
 
   def make_species
     scrape_species_index.each do |content|
-
-  #   @doc = Nokogiri::HTML(open("https://www.worldwildlife.org/species/directory"))
-  #   @doc.search("table.lead.gutter-bottom-2.table-to-list tbody tr").each do |content|
       species = EndangeredSpecies::Species.new
 
       species.name = content.css("td.keep a").first.text
@@ -26,18 +23,13 @@ class EndangeredSpecies::Scraper
       species.url = "https://www.worldwildlife.org#{content.css("a").attr("href").text}"
 
       @doc = Nokogiri::HTML(open(species.url))
-      @doc.search("div.section-inner.shaded-light-checked.section-inner-padded").each do |more_info|
-# binding.pry
-#         species.summary = more_info.css("p").text
-#         species.pop = more_info.css("ico").text
-#         species.height = more_info.css("p").text
-#         species.weight = more_info.css("p").text
-#         species.length = more_info.css("p").text
-#         species.habitat = more_info.css("p").text
-
+      @doc.search("div.gutter-top-in-4.gutter-bottom-in-2.gutter-horiz-in").each do |more_info|
+        species.summary = more_info.css("p").text
+        species.place = more_info.css("div > a:nth-child(1)").text.gsub(/(?<=[a-z])(?=[A-Z])/, ', ')
+        species.habitat = more_info.css("div > a:nth-child(2)").text.gsub(/(?<=[a-z])(?=[A-Z])/, ', ')
         species.save
+  # binding.pry
       end
     end
   end
-
 end
