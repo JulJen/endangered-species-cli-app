@@ -1,7 +1,4 @@
-# CLI controller - get user input
-# CLI
-#  Scraper
-#   Species
+# CLI controller - user interaction
 
 class EndangeredSpecies::CLI
 
@@ -9,7 +6,7 @@ class EndangeredSpecies::CLI
 
   def call
     puts ""
-    puts "Welcome! Learn more about the world's most endangered species at World Wild Life (WWF)!"
+    puts "Welcome! Learn about World Wildlife Fund's conservation of species and the environment!"
     sleep 1
     puts ""
     puts "..."
@@ -26,12 +23,12 @@ class EndangeredSpecies::CLI
     input = ""
     while !exit?(input)
       puts ""
-      puts "Enter 1 if you would like to get more background on each individual species."
+      puts "Enter 1 if you would like to read more about endangered species."
       puts ""
       sleep 1
       puts "or"
       puts ""
-      puts "Enter 2 if you would like to read the latest articles about endangered species."
+      puts "Enter 2 if you would like to read the latest news articles from WWF."
       puts ""
       input = gets.strip
       if ["1", "one"].include?(input)
@@ -69,7 +66,7 @@ class EndangeredSpecies::CLI
     input = ""
     while !exit?(input)
       puts ""
-      puts "Would like to return to the main menu? Enter Y or N."
+      puts "Return to main menu or exit? Enter Y or N."
       puts ""
       input = gets.strip
       if yes_user(input)
@@ -140,7 +137,7 @@ class EndangeredSpecies::CLI
     input = ""
     while !exit?(input)
       puts ""
-      puts "Do you want to continue learning more about each species? Enter Y or N."
+      puts "Do you want to continue and learn about another species? Enter Y or N."
       puts ""
       input = gets.strip
       if yes_user(input)

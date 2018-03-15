@@ -1,4 +1,4 @@
-# Article class used for storing data
+# Stores data on all Articles
 
 class EndangeredSpecies::Articles
   attr_accessor :title, :date, :summary, :url

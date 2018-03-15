@@ -1,4 +1,4 @@
-# Species class used for storing data
+# Stores data on all Species
 
 class EndangeredSpecies::Species
   attr_accessor :name, :status, :url, :summary, :scientific, :location, :habitat, :place

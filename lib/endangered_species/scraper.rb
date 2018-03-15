@@ -1,7 +1,5 @@
-# require 'pry'
-# Need a scraper class
-# Get article data and zip it up
-# instantiate Species based on data
+# Get data and zip it up
+# instantiate Species or Articles based on user input from CLI controller
 
 class EndangeredSpecies::Scraper
 
@@ -44,8 +42,7 @@ class EndangeredSpecies::Scraper
       articles = EndangeredSpecies::Articles.new
       articles.title = content.css("h2 a").text
       articles.date = content.css("em").text.gsub("WWF Magazine:","")
-      articles.summary = content.css("div p").text
-
+      articles.summary = content.css("div").text.gsub("\n","")
       articles.url = "https://www.worldwildlife.org#{content.css("a").attr("href").text}"
       articles.save
     end
