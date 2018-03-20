@@ -137,7 +137,7 @@ class EndangeredSpecies::CLI
     input = ""
     while !exit?(input)
       puts ""
-      puts "Do you want to continue and learn about another species? Enter Y or N."
+      puts "Do you want to continue reading about species? Enter Y or N."
       puts ""
       input = gets.strip
       if yes_user(input)
