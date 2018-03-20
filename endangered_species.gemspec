@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["juliajen.prog@gmail.com"]
 
   spec.summary       = %q{Endangered Species in the world.}
-  spec.description   = %q{Provides details on endangered species in all regions of the world.}
+  spec.description   = %q{Provides details on the world's endangered species.}
   spec.homepage      = "https://github.com/JulJen/endangered-species-cli-app"
   spec.license       = "MIT"
 
@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features)/})
   end
   #spec.bindir        = "exe"
-  spec.executables   << "endangered-species-cli-app"
+  spec.executables   << "endangered_species"
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.16"
